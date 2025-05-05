@@ -1,3 +1,2 @@
-print("Hello World")
-first = "hello"
-print(first)
+print("Hello world\nHello world\nHello world\nHello world")
+
