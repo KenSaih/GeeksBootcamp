@@ -10,6 +10,6 @@ def campare_numbers(user_number):
         return f"Congratulations! the both numbers are {user_number}"
     else:
         return f"Your number was {user_number}, the computer's number was {computer_number}. Better luck next time!"
-    print(campare_numbers(50))
+ 
     
 
