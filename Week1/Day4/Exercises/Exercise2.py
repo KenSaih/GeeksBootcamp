@@ -21,7 +21,7 @@ class Dog:
         else:
             return "It's a tie!"
 
-dog1 = Dog("Rex", 3, 15)
+dog1 = Dog("Alexa", 3, 15)
 dog2 = Dog("Buddy", 2, 20)
 dog3 = Dog("Rocky", 4, 25)
 
