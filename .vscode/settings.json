@@ -35,6 +35,15 @@
             "database": "Puzzle",
             "name": "localhost",
             "username": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "Relationships",
+            "name": "localhost",
+            "username": "postgres"
         }
     ]
 }

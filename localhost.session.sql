@@ -1,167 +1,102 @@
---Exercise 2 : dvdrental database
+-- Part1
 
---In the dvdrental database write a query to select all the columns from the “customer” table.
-select * FROM customer;
-
---Write a query to display the names (first_name, last_name) using an alias named “full_name”.
-select concat (first_name, ' ', last_name) as full_name from customer;
-
-
---Lets get all the dates that accounts were created. Write a query to select all the create_date from the “customer” table (there should be no duplicates).
-select DISTINCT create_date from customer;
-
---Write a query to get all the customer details from the customer table, it should be displayed in descending order by their first name.
-select * from customer order by first_name ASC;
---Write a query to get the film ID, title, description, year of release and rental rate in ascending order according to their rental rate.
-select film-id, title, description, release_year, rental_rate from film order by rental_rate asc;
-
---Write a query to get the address, and the phone number of all customers living in the Texas district, these details can be found in the “address” table.
-select address, phone from address where district = 'Texas';
-
---Write a query to retrieve all movie details where the movie id is either 15 or 150.
-SELECT *from film WHERE film_id = 15 or  film_id = 150;
-SELECT * from film WHERE film_id in (15, 150);
---Write a query which should check if your favorite movie exists in the database. Have your query get the film ID, title, description, length and the rental rate, these details can be found in the “film” table
-select film_id, title, description, length, rental_rate from film where title ='alien';
-select title from film;
---No luck finding your movie? Maybe you made a mistake spelling the name. Write a query to get the film ID, title, description, length and the rental rate of all the movies starting with the two first letters of your favorite movie.
-select film_id, title, description, length, rental_rate from film where title like 'titanic';
-
---Write a query which will find the 10 cheapest movies.
-select * from film order by rental_rate asc limit 10;
-
--- Query to find the next 10 cheapest movies without using LIMIT
-select * from film order by rental_rate asc
-fetch first 10 rows only
-
---Write a query which will join the data in the customer table and the payment table. You want to get the first name and last name from the curstomer table, as well as the amount and the date of every payment made by a customer, ordered by their id (from 1 to…).
-select first_name, last_name, amount, payment_date from customer c
-join payment p on c.customer_id = p.customer_id
-order by c.customer_id;
-
---You need to check your inventory. Write a query to get all the movies which are not in inventory.
-select * from film where film_id not in (select film_id from inventory);
-
---Write a query to find which city is in which country.
-select city, country from city c
-join country co on c.country_id = co.country_id;
-
---Bonus You want to be able to see how your sellers have been doing? Write a query to get the customer’s id, names (first and last), the amount and the date of payment ordered by the id of the staff member who sold them the dvd.
-select customer.customer_id, first_name, last_name, amount, payment_date from customer c
-join payment p on c.customer_id = p.customer_id
-join staff s on p.staff_id = s.staff_id
-order by s.staff_id;
-
---DAY3 
-
---Exercise1/ DAY3
-
---1/ Get a list of all the languages, from the language table.
-select * from language;
---2/Get a list of all films joined with their languages – select the following details : film title, description, and language name.
-select title, description, name from film f
-join language l on f.language_id = l.language_id;
-
---3/Get all languages, even if there are no films in those languages – select the following details : film title, description, and language name.
-select title, description, name from film f
-join language l on f.language_id = l.language_id
-where f.language_id is null;
-
---4/Create a new table called new_film with the following columns : id, name. Add some new films to the table.
-
-create table new_film (
-    id serial primary key,
-    name varchar(255)
+CREATE TABLE Customer (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL
 );
 
-insert into new_film (name) values ('Titanic')('Avatar')('Star Wars')('Ghazial'), ('Harry Potter');
-
---5/Create a new table called customer_review, which will contain film reviews that customers will make.Think about the DELETE constraint: if a film is deleted, its review should be automatically deleted.should have the following columns:review_id – a primary key, non null, auto-increment.film_id – references the new_film table. The film that is being reviewed.language_id – references the language table. What language the review is in.title – the title of the review.score – the rating of the review (1-10).review_text – the text of the review. No limit on the length.last_update – when the review was last updated.
-
-create table customer_review (
-    review_id serial primary key,
-    film_id int references new_film(id) on delete cascade,
-    language_id int references language(language_id),
-    title varchar(255),
-    score int check (score >= 1 and score <= 10),
-    review_text text,
-    last_update timestamp default current_timestamp
+CREATE TABLE Customer_profile (
+    id SERIAL PRIMARY KEY,
+    isLoggedIn BOOLEAN DEFAULT false,
+    customer_id INTEGER UNIQUE REFERENCES Customer(id) ON DELETE CASCADE
 );
-
---6/Add 2 movie reviews. Make sure you link them to valid objects in the other tables.
-insert into customer_review (film_id, language_id, title, score, review_text)
-values (1, 1, 'Answome film', 10, 'I really enjoyed this fim. The plot was amazing and the acting was top-notch.'),
-       (2, 2, 'Not my cup of tea', 5, 'The movie was okay, but I expected more from it.');
-
-select * from customer_review;
-
---7/ Delete a film that has a review from the new_film table
-delete from new_film where id = 1;
-
---7/ what happens to the customer_review table? : Output: The review is deleted from the customer_review table because of the ON DELETE CASCADE constraint we set when creating the table. This means that if a film is deleted, all reviews associated with that film will also be deleted automatically.
-
-
---Exercise 2 :DAY3
-
---1 /Use UPDATE to change the language of some films. Make sure that you use valid languages.
-
-UPDATE film 
-SET language_id = 2 
-WHERE film_id IN (1, 2, 3)
-AND EXISTS (SELECT 1 FROM language WHERE language_id = 2);
-
+INSERT INTO Customer (first_name, last_name) VALUES
+    ('John', 'Doe'),
+    ('Jerome', 'Lalu'),
+    ('Lea', 'Rive');
  
-DROP TABLE customer_review;
+INSERT INTO Customer_profile (customer_id, isLoggedIn) VALUES
+    ((SELECT id FROM Customer WHERE first_name = 'John' AND last_name = 'Doe'), true),
+    ((SELECT id FROM Customer WHERE first_name = 'Jerome' AND last_name = 'Lalu'), false);
+ 
+SELECT c.first_name
+FROM Customer c
+INNER JOIN Customer_profile cp ON c.id = cp.customer_id
+WHERE cp.isLoggedIn = true;
+ 
+SELECT 
+    c.first_name,
+    cp.isLoggedIn
+FROM Customer c
+LEFT JOIN Customer_profile cp ON c.id = cp.customer_id;
  
 SELECT COUNT(*) 
-FROM rental 
-WHERE return_date IS NULL;
- 
-SELECT DISTINCT f.title, f.replacement_cost
-FROM rental r
-JOIN inventory i ON r.inventory_id = i.inventory_id
-JOIN film f ON i.film_id = f.film_id
-WHERE r.return_date IS NULL
-ORDER BY f.replacement_cost DESC
-LIMIT 30;
- 
-SELECT f.title
-FROM film f
-JOIN film_actor fa ON f.film_id = fa.film_id
-JOIN actor a ON fa.actor_id = a.actor_id
-WHERE a.first_name = 'Penelope' 
-AND a.last_name = 'Monroe'
-AND f.description ILIKE '%sumo wrestler%';
- 
-SELECT f.title
-FROM film f
-JOIN film_category fc ON f.film_id = fc.film_id
-JOIN category c ON fc.category_id = c.category_id
-WHERE c.name = 'Documentary'
-AND f.rating = 'R'
-AND f.length < 60;
- 
-SELECT DISTINCT f.title
-FROM rental r
-JOIN customer c ON r.customer_id = c.customer_id
-JOIN inventory i ON r.inventory_id = i.inventory_id
-JOIN film f ON i.film_id = f.film_id
-JOIN payment p ON r.rental_id = p.rental_id
-WHERE c.first_name = 'Matthew' 
-AND c.last_name = 'Mahan'
-AND p.amount > 4.00
-AND r.return_date BETWEEN '2005-07-28' AND '2005-08-01';
- 
-SELECT DISTINCT f.title
-FROM rental r
-JOIN customer c ON r.customer_id = c.customer_id
-JOIN inventory i ON r.inventory_id = i.inventory_id
-JOIN film f ON i.film_id = f.film_id
-WHERE c.first_name = 'Matthew' 
-AND c.last_name = 'Mahan'
-AND (f.title ILIKE '%boat%' OR f.description ILIKE '%boat%')
-ORDER BY f.replacement_cost DESC
-LIMIT 1;
- 
+FROM Customer c
+LEFT JOIN Customer_profile cp ON c.id = cp.customer_id
+WHERE cp.isLoggedIn = false OR cp.isLoggedIn IS NULL;
+ -- Part2
 
---2
+CREATE TABLE Book (
+    book_id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    author VARCHAR(100) NOT NULL
+);
+ 
+INSERT INTO Book (title, author) VALUES
+    ('Alice In Wonderland', 'Lewis Carroll'),
+    ('Harry Potter', 'J.K Rowling'),
+    ('To kill a mockingbird', 'Harper Lee');
+ 
+CREATE TABLE Student (
+    student_id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    age SMALLINT CHECK (age <= 15)
+);
+ 
+INSERT INTO Student (name, age) VALUES
+    ('John', 12),
+    ('Lera', 11),
+    ('Patrick', 10),
+    ('Bob', 14);
+ 
+ select * from Student;
+ 
+CREATE TABLE Library (
+    book_fk_id INTEGER REFERENCES Book(book_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    student_fk_id INTEGER REFERENCES Student(student_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    borrowed_date DATE,
+    PRIMARY KEY (book_fk_id, student_fk_id)
+);
+ 
+INSERT INTO Library (book_fk_id, student_fk_id, borrowed_date) VALUES
+    ((SELECT book_id FROM Book WHERE title = 'Alice In Wonderland'), 
+     (SELECT student_id FROM Student WHERE name = 'John'), 
+     '2022-02-15'),
+    ((SELECT book_id FROM Book WHERE title = 'To kill a mockingbird'), 
+     (SELECT student_id FROM Student WHERE name = 'Bob'), 
+     '2021-03-03'),
+    ((SELECT book_id FROM Book WHERE title = 'Alice In Wonderland'), 
+     (SELECT student_id FROM Student WHERE name = 'Lera'), 
+     '2021-05-23'),
+    ((SELECT book_id FROM Book WHERE title = 'Harry Potter'), 
+     (SELECT student_id FROM Student WHERE name = 'Bob'), 
+     '2021-08-12');
+
+SELECT * FROM Library;
+ 
+SELECT 
+    s.name,
+    b.title
+FROM Library l
+JOIN Student s ON l.student_fk_id = s.student_id
+JOIN Book b ON l.book_fk_id = b.book_id;
+ 
+SELECT AVG(s.age)
+FROM Library l
+JOIN Student s ON l.student_fk_id = s.student_id
+JOIN Book b ON l.book_fk_id = b.book_id
+WHERE b.title = 'Alice In Wonderland';
+ 
+DELETE FROM Student WHERE name = 'Bob';
+ 
