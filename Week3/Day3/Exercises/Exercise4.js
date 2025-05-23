@@ -1,15 +1,12 @@
 //Vacations Costs
 
-// function hotelCost(nights) {
-//     let nights = prompt("how many nignhts do you want book?");
-//     let costs = 140;
-//     let totalCosts = nights * costs;
-//     return totalCosts;
-// }
-
 function hotelCost(nights) {
-    return nights * 140; 
+    let nights = prompt("how many nignhts do you want book?");
+    let costs = 140;
+    let totalCosts = nights * costs;
+    return totalCosts;
 }
+
 
 function planeRideCost(destination) {
     if (destination.toLowerCase() === "london") return 183; 
