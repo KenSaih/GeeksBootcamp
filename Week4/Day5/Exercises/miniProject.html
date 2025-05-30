@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Friends</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            margin: 0 auto;
+            max-width: 500px;
+        }
+
+        #search {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #search:focus {
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .robot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .robot-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .robot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .robot-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .robot-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .robot-info h2 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .robot-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            color: #666;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Robot Friends</h1>
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Rechercher des robots..." />
+            </div>
+        </header>
+        
+        <div class="robot-grid" id="robot-container">
+            <!-- Les robots seront insérés ici par JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const robots = [
+            {
+                id: 1,
+                name: 'Leanne Graham',
+                username: 'Bret',
+                email: 'Sincere@april.biz',
+                image: 'https://robohash.org/1?200x200'
+            },
+            {
+                id: 2,
+                name: 'Ervin Howell',
+                username: 'Antonette',
+                email: 'Shanna@melissa.tv',
+                image: 'https://robohash.org/2?200x200'
+            },
+            {
+                id: 3,
+                name: 'Clementine Bauch',
+                username: 'Samantha',
+                email: 'Nathan@yesenia.net',
+                image: 'https://robohash.org/3?200x200'
+            },
+            {
+                id: 4,
+                name: 'Patricia Lebsack',
+                username: 'Karianne',
+                email: 'Julianne.OConner@kory.org',
+                image: 'https://robohash.org/4?200x200'
+            },
+            {
+                id: 5,
+                name: 'Chelsey Dietrich',
+                username: 'Kamren',
+                email: 'Lucio_Hettinger@annie.ca',
+                image: 'https://robohash.org/5?200x200'
+            },
+            {
+                id: 6,
+                name: 'Mrs. Dennis Schulist',
+                username: 'Leopoldo_Corkery',
+                email: 'Karley_Dach@jasper.info',
+                image: 'https://robohash.org/6?200x200'
+            },
+            {
+                id: 7,
+                name: 'Kurtis Weissnat',
+                username: 'Elwyn.Skiles',
+                email: 'Telly.Hoeger@billy.biz',
+                image: 'https://robohash.org/7?200x200'
+            },
+            {
+                id: 8,
+                name: 'Nicholas Runolfsdottir V',
+                username: 'Maxime_Nienow',
+                email: 'Sherwood@rosamond.me',
+                image: 'https://robohash.org/8?200x200'
+            },
+            {
+                id: 9,
+                name: 'Glenna Reichert',
+                username: 'Delphine',
+                email: 'Chaim_McDermott@dana.io',
+                image: 'https://robohash.org/9?200x200'
+            },
+            {
+                id: 10,
+                name: 'Clementina DuBuque',
+                username: 'Moriah.Stanton',
+                email: 'Rey.Padberg@karina.biz',
+                image: 'https://robohash.org/10?200x200'
+            }
+        ];
+
+        // Éléments DOM
+        const robotContainer = document.getElementById('robot-container');
+        const searchInput = document.getElementById('search');
+
+        // Afficher tous les robots initialement
+        displayRobots(robots);
+
+        // Écouteur d'événement pour la recherche
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredRobots = robots.filter(robot => 
+                robot.name.toLowerCase().includes(searchTerm)
+            );
+            displayRobots(filteredRobots);
+        });
+
+        // Fonction pour afficher les robots
+        function displayRobots(robotsToDisplay) {
+            if (robotsToDisplay.length === 0) {
+                robotContainer.innerHTML = '<div class="no-results">Aucun robot trouvé correspondant à votre recherche.</div>';
+                return;
+            }
+
+            robotContainer.innerHTML = robotsToDisplay.map(robot => `
+                <div class="robot-card">
+                    <img src="${robot.image}" alt="${robot.name}" class="robot-image">
+                    <div class="robot-info">
+                        <h2>${robot.name}</h2>
+                        <p>@${robot.username}</p>
+                        <p>${robot.email}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
