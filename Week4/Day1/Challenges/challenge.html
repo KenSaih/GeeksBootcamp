@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groceries Challenge</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      background-image: url('http://hawaiioceanviewproperties.com/wp-content/uploads/2017/03/th_FullSizeRender-2-3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #fruits-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #fruits-list li {
+      background-color: #f2f2f2;
+      margin: 5px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    #modified-section p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    /* Section for displaying blog images */
+    #blog-images {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+
+    #blog-images img {
+      width: 48%; /* Make each image take up half the width */
+      border-radius: 8px;
+    }
+
+    /* Styling for the buttons */
+    button {
+      font-size: 18px;
+      padding: 15px;
+      margin: 10px;
+    }
+
+    /* Section styling for the client and price section */
+    #modified-section {
+      background-color: rgba(255, 255, 255, 0.7); /* Slight transparent background */
+      padding: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Daily Challenge: Groceries</h1>
+
+    <!-- Blog Images -->
+    <div id="blog-images">
+      <img src="https://curlytales.com/wp-content/uploads/2020/04/grocery-getty-1.jpg" alt="Grocery Image 1">
+      <img src="https://img.money.com/2016/05/jet-grocery-delivery.jpg" alt="Grocery Image 2">
+    </div>
+
+    <!-- Section to display fruits -->
+    <div id="fruits-section">
+      <h2>Fruits List:</h2>
+      <ul id="fruits-list"></ul>
+    </div>
+
+    <!-- Buttons to trigger the JavaScript functions -->
+    <button id="displayGroceriesBtn">Afficher les fruits</button>
+    <button id="cloneGroceriesBtn">Cloner et Modifier les données</button>
+
+    <!-- Section for showing modified values -->
+    <div id="modified-section">
+      <h2>Modifications effectuées:</h2>
+      <p><strong>Client modifié:</strong> <span id="client-result">John</span></p>
+      <p><strong>Prix total modifié:</strong> <span id="total-price-result">20$</span></p>
+      <p><strong>Status de paiement modifié:</strong> <span id="paid-status-result">true</span></p>
+    </div>
+  </div>
+
+  <script>
+    let client = "John";
+
+    const groceries = {
+      fruits: ["pear", "apple", "banana"],
+      vegetables: ["tomatoes", "cucumber", "salad"],
+      totalPrice: "20$",
+      other: {
+        paid: true,
+        meansOfPayment: ["cash", "creditCard"]
+      }
+    };
+
+    // Arrow function to display fruits from groceries object
+    const displayGroceries = () => {
+      const fruitsList = document.getElementById("fruits-list");
+      groceries.fruits.forEach(fruit => {
+        const li = document.createElement("li");
+        li.textContent = fruit;
+        fruitsList.appendChild(li);
+      });
+    };
+
+    // Arrow function to clone and modify variables
+    const cloneGroceries = () => {
+      // 1. Create a user variable that is a copy of the client variable
+      let user = client;
+      
+      // Change the client variable to "Betty"
+      client = "Betty";
+      
+      // Display the modifications in HTML
+      document.getElementById("client-result").textContent = client;
+
+      // 2. Create a shopping variable that is a copy of the groceries object
+      let shopping = groceries;
+      
+      // Change the value of totalPrice key to 35$
+      shopping.totalPrice = "35$";
+      
+      // Will we see this modification in the shopping object?
+      document.getElementById("total-price-result").textContent = shopping.totalPrice;
+
+      // 3. Change the value of the paid key to false
+      shopping.other.paid = false;
+      
+      // Will we see this modification in the shopping object?
+      document.getElementById("paid-status-result").textContent = shopping.other.paid;
+    };
+
+    // Add event listeners to the buttons
+    document.getElementById("displayGroceriesBtn").addEventListener("click", displayGroceries);
+    document.getElementById("cloneGroceriesBtn").addEventListener("click", cloneGroceries);
+  </script>
+</body>
+</html>
