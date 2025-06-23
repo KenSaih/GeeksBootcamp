@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Star Wars Character Generator</title>
+  <link rel="stylesheet" href="starwars.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌌 Star Wars Character Generator</h1>
+    <button id="generateBtn">Get Random Character</button>
+
+    <div id="loading" class="hidden">
+      <i class="fas fa-spinner fa-spin"></i> Loading character...
+    </div>
+
+    <div id="characterInfo" class="card hidden">
+      <h2 id="name"></h2>
+      <p><strong>Height:</strong> <span id="height"></span></p>
+      <p><strong>Gender:</strong> <span id="gender"></span></p>
+      <p><strong>Birth Year:</strong> <span id="birthYear"></span></p>
+      <p><strong>Homeworld:</strong> <span id="homeworld"></span></p>
+    </div>
+
+    <button id="favBtn" class="hidden">⭐ Add to Favorites</button>
+
+    <div id="error" class="error hidden">
+      <i class="fas fa-exclamation-triangle"></i> Failed to load data. Try again!
+    </div>
+
+    <h3>🧾 History</h3>
+    <ul id="historyList" class="history"></ul>
+
+    <h3>⭐ Favorites</h3>
+    <ul id="favoritesList" class="history"></ul>
+  </div>
+
+  <script src="starwars.js"></script>
+</body>
+</html>

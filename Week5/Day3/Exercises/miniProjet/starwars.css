@@ -1,0 +1,128 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0b0c10;
+    color: #c5c6c7;
+    text-align: center;
+    padding: 2rem;
+    background-image: radial-gradient(circle at 20% 30%, #66fcf1 1px, transparent 1px),
+                      radial-gradient(circle at 80% 70%, #45a29e 1.5px, transparent 1px),
+                      radial-gradient(circle at 50% 50%, #fff 0.5px, transparent 1px);
+    background-size: 120px 120px, 180px 180px, 240px 240px;
+    animation: starMove 20s linear infinite;
+}
+
+@keyframes starMove {
+    0% { background-position: 0 0, 0 0, 0 0; }
+    100% { background-position: 120px 240px, 180px 360px, 240px 480px; }
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    border: 2px solid #66fcf1;
+    border-radius: 16px;
+    box-shadow: 0 0 30px #45a29e44;
+    background: rgba(31, 40, 51, 0.95);
+    padding-bottom: 2rem;
+}
+
+button {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: #1f2833;
+    color: #66fcf1;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px #45a29e33;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: #45a29e;
+    color: #0b0c10;
+    transform: scale(1.05) rotate(-2deg);
+    box-shadow: 0 4px 16px #66fcf1aa;
+}
+
+.card {
+    background-color: #1f2833;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #66fcf1;
+    margin-bottom: 1rem;
+    border: 2px solid;
+    border-image: linear-gradient(135deg, #66fcf1, #45a29e) 1;
+    position: relative;
+    overflow: hidden;
+}
+.card::after {
+    content: "★";
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 1.5rem;
+    color: #66fcf1;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.error {
+    color: #ff4c4c;
+    margin-top: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: #1f2833;
+    border: 1px solid #ff4c4c;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    box-shadow: 0 2px 8px #ff4c4c33;
+}
+
+.hidden {
+    display: none;
+}
+
+.history {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.history li {
+    background-color: #1f2833;
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    border-left: 4px solid #66fcf1;
+    border-radius: 4px;
+    text-align: left;
+    transition: background 0.2s, transform 0.2s;
+    position: relative;
+}
+.history li:hover {
+    background: #232b36;
+    transform: scale(1.02);
+}
+.history li::before {
+    content: "✦";
+    color: #45a29e;
+    margin-right: 0.5rem;
+    font-size: 1.1em;
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 0.5rem;
+    }
+    .card {
+        padding: 1rem;
+    }
+    button {
+        width: 100%;
+        font-size: 1rem;
+    }
+}
