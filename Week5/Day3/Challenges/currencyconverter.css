@@ -1,0 +1,192 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #b96dba 100%);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+@keyframes floatCoin {
+    0% { transform: translateY(0) rotate(0deg);}
+    50% { transform: translateY(-30px) rotate(20deg);}
+    100% { transform: translateY(0) rotate(0deg);}
+}
+
+.coin {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 30% 30%, #ffe066 70%, #ffd700 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px #ffd70088;
+    border: 2px solid #ffd700;
+    z-index: 0;
+    opacity: 0.7;
+    animation: floatCoin 3s ease-in-out infinite;
+}
+.coin.coin1 { left: 10vw; top: 10vh; animation-delay: 0s;}
+.coin.coin2 { left: 80vw; top: 20vh; animation-delay: 1s;}
+.coin.coin3 { left: 50vw; top: 80vh; animation-delay: 2s;}
+.coin.coin4 { left: 30vw; top: 60vh; animation-delay: 1.5s;}
+.coin.coin5 { left: 70vw; top: 50vh; animation-delay: 0.5s;}
+
+.converter-container {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+    padding: 36px 30px 30px 30px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+    
+    border: 2px solid;
+    border-image: linear-gradient(135deg, #4299e1, #48bb78) 1;
+}
+
+h1 {
+    color: #2d3748;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 6px #e6f7ff;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4a5568;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background: #f7fafc;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 8px #4299e144;
+}
+
+.currency-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.switch-btn {
+    background: linear-gradient(135deg, #4299e1 60%, #48bb78 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 22px;
+    font-size: 1.3em;
+    box-shadow: 0 2px 8px #4299e133;
+}
+.switch-btn:hover {
+    background: linear-gradient(135deg, #48bb78 60%, #4299e1 100%);
+    transform: scale(1.1) rotate(180deg);
+}
+
+button#convert {
+    background: linear-gradient(135deg, #48bb78 60%, #4299e1 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px #48bb7833;
+}
+button#convert:hover {
+    background: linear-gradient(135deg, #4299e1 60%, #48bb78 100%);
+    transform: scale(1.03);
+}
+
+.result {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(90deg, #ebf8ff 80%, #c3e0f7 100%);
+    border-radius: 8px;
+    text-align: center;
+    display: none;
+    box-shadow: 0 2px 8px #4299e133;
+}
+
+.result-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2b6cb0;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.result-rate {
+    color: #4a5568;
+    font-size: 15px;
+    font-style: italic;
+}
+
+.error {
+    color: #e53e3e;
+    background-color: #fff5f5;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: none;
+    font-weight: 600;
+    box-shadow: 0 2px 8px #e53e3e22;
+    letter-spacing: 1px;
+}
+
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    80% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
+}
+.result.show {
+    display: block;
+    animation: popIn 0.5s;
+}
+
+@media screen and (max-width: 600px) {
+    .converter-container {
+        padding: 12px 4px 18px 4px;
+        border-radius: 8px;
+    }
+    .card {
+        padding: 1rem;
+    }
+    button, input, select {
+        font-size: 1rem;
+    }
+}

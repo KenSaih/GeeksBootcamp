@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="currencyconverter.css">
+</head>
+<body>
+    <div class="converter-container">
+        <h1>Currency Converter</h1>
+        
+        <div class="input-group">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" placeholder="Amount" value="1" min="0">
+        </div>
+        
+        <div class="currency-row">
+            <div class="input-group" style="flex: 1;">
+                <label for="from">From:</label>
+                <select id="from"></select>
+            </div>
+            
+            <button class="switch-btn" id="switch">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </button>
+            
+            <div class="input-group" style="flex: 1;">
+                <label for="to">To:</label>
+                <select id="to"></select>
+            </div>
+        </div>
+        
+        <button id="convert">Converter</button>
+        
+        <div class="result" id="result">
+            <div class="result-amount" id="conversion-result"></div>
+            <div class="result-rate" id="conversion-rate"></div>
+        </div>
+        
+        <div class="error" id="error"></div>
+    </div>
+
+    <script src="currencyconverter.js"></script>
+   
+</body>
+</html>
