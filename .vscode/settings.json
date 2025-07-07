@@ -80,6 +80,16 @@
             "database": "booksReviews",
             "username": "postgres",
             "name": "localhost"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "localhost",
+            "database": "Port",
+            "password": "Ines1991",
+            "username": "postgres"
         }
     ]
 }
